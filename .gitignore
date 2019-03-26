@@ -1,4 +1,5 @@
 node_modules
 *.json
 gulpfile.js
-package.*
+package.json
+webpack.config.js
