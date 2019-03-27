@@ -2,6 +2,8 @@ import Element from "./Element";
 import Utils from "./Utils";
 import Data from "./Data";
 import ViewModel from "./ViewModel";
+import Diff from "./Diff";
+import Patch from "./Patch";
 
 import '../css/iconfont.css';
 import '../css/mPrint.css';
@@ -25,21 +27,27 @@ import '../fonts/iconfont.woff2';
         if (typeof (data.data.bgi) === 'string') {
             data.data.bgi = JSON.parse(data.data.bgi);
         }
-        var tree = init(data.printData);
+        var tree = makeTree(data.printData);
         Object.defineProperties(_this, {
             'data': {
                 get: function () {
                     return data;
                 },
                 set: function (n) {
-                    ViewModel.tmp = n;
+                    const newTree = makeTree(n);
+                    const patches = Diff(tree, newTree);
+                    console.log(patches);
+
+                    Patch(_this.root, patches);
+                    _this.root = newTree.render();
                 }
             },
         });
-
-        document.body.appendChild(tree.render());
+        _this.root = tree.render();
+        document.body.appendChild(_this.root);
     }
-    const init = function (data) {
+
+    const makeTree = function (data) {
         // 来自数据库
         var tmp = [];
         for (let index = 0; index < data.length; index++) {
@@ -84,5 +92,8 @@ import '../fonts/iconfont.woff2';
 }));
 var alp = new JSPrint(Data);
 console.log(alp);
-alp.data = [];
+alp.data = Data.printDataTest2;
+console.log(alp);
+alp.data = Data.printDataTest2;
+
 console.log(alp);

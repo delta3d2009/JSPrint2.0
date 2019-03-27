@@ -36,5 +36,89 @@ export default {
         title: '自定义选项',
         data: {
         }
+    }],
+    printDataTest: [{
+        id: 1,
+        title: '打印选项1',
+        data: {
+            filed1: '打印项目1',
+            filed2: '打印项目2',
+            filed3: '打印项目3',
+            filed4: '打印项目4',
+        },
+    }, {
+        id: 2,
+        title: '打印选项2',
+        data: {
+            filed5: '打印项目5',
+            filed6: '打印项目6',
+            filed7: '打印项目7',
+            filed8: '打印项目8',
+            filed9: '打印项目9',
+            filed10: '打印项目10',
+            filed11: '打印项目11',
+            filed12: '打印项目12',
+        },
+    }, {
+        id: 3,
+        title: '打印选项3',
+        data: {
+            filed5: '打印项目5',
+            filed6: '打印项目6',
+            filed7: '打印项目7',
+            filed8: '打印项目8',
+            filed9: '打印项目9',
+        },
+    }, {
+        id: -1,
+        title: '自定义选项',
+        data: {
+            filed9: '打印项目9',
+            filed10: '打印项目10',
+            filed11: '打印项目11',
+            filed12: '打印项目12',
+        }
+    }],
+    printDataTest2: [{
+        id: 1,
+        title: '打印选项4',
+        data: {
+            filed1: '打印项目1',
+            filed2: '打印项目2',
+            filed3: '打印项目3',
+            filed4: '打印项目4',
+        },
+
+    }, {
+        id: 2,
+        title: '打印选项5',
+        data: {
+            filed9: '打印项目9',
+            filed10: '打印项目10',
+            filed11: '打印项目11',
+            filed12: '打印项目12',
+        },
+    }, {
+        id: 3,
+        title: '打印选项6',
+        data: {
+            filed5: '打印项目5',
+            filed6: '打印项目6',
+            filed7: '打印项目7',
+            filed8: '打印项目8',
+            filed9: '打印项目9',
+            filed10: '打印项目10',
+            filed11: '打印项目11',
+            filed12: '打印项目12',
+        },
+    }, {
+        id: -1,
+        title: '自定义选项',
+        data: {
+            filed9: '打印项目9',
+            filed10: '打印项目10',
+            filed11: '打印项目11',
+            filed12: '打印项目12',
+        }
     }]
 }
