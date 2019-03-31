@@ -4,6 +4,8 @@ import Data from "./Data";
 import ViewModel from "./ViewModel";
 import Diff from "./Diff";
 import Patch from "./Patch";
+import Move from "./Move2";
+import Copy from "./Copy";
 
 import '../css/iconfont.css';
 import '../css/mPrint.css';
@@ -36,8 +38,6 @@ import '../fonts/iconfont.woff2';
                 set: function (n) {
                     const newTree = makeTree(n);
                     const patches = Diff(tree, newTree);
-                    console.log(patches);
-
                     Patch(_this.root, patches);
                     _this.root = newTree.render();
                 }
@@ -55,7 +55,7 @@ import '../fonts/iconfont.woff2';
             var subTmp = [];
             for (var key in item.data) {
                 var v = item.data[key];
-                subTmp.push(Element('div', { class: 'mPrint-left-bot-choice-item iconfont icon-fuxuankuang' }, {}, [
+                subTmp.push(Element('div', { class: 'mPrint-left-bot-choice-item iconfont icon-fuxuankuang' }, { click: Copy }, [
                     Element('span', { class: 'ci_file' }, {}, [v])
                 ]));
             }
@@ -81,7 +81,16 @@ import '../fonts/iconfont.woff2';
                 ]),
                 // 左下部分
                 Element('div', { class: 'mPrint-left-bot' }, {}, [
-                    Element('div', { class: 'mPrint-left-bot-layer' }, {}, tmp)
+                    Element('div', { class: 'mPrint-left-bot-layer' }, {}, tmp),
+                    Element('div', { class: 'mPrint-left-bot-ticket', style: `height:${ViewModel.tmp.height}px;width:${ViewModel.tmp.width}px;overflow:hidden;` }, {}, [
+                        Element('div', { class: 'mPrint-left-bot-ticket-wrap' }, {}, [
+                            Element('div', { class: 'mPrint-left-bot-ticket-drag iconfont icon-tuozhuai' }, { mousedown: Move }, []),
+                            Element('div', { class: 'mPrint-left-bot-ticket-item', style: `min-width:${ViewModel.mData_global.ele_min_width}px;max-width:${ViewModel.mData_global.ele_max_width}px;` }, { mousedown: Move }, [
+                                Element('div', { class: 'mPrint-left-bot-ticket-item-text' }, {}, ['测试']),
+                                Element('div', { class: 'mPrint-left-bot-ticket-item-icon iconfont icon-shanchu-copy' }, {}, [])
+                            ])
+                        ]),
+                    ])
                 ]),
             ]),
             // 右部分
@@ -91,9 +100,4 @@ import '../fonts/iconfont.woff2';
     return JSPrint;
 }));
 var alp = new JSPrint(Data);
-console.log(alp);
 alp.data = Data.printDataTest2;
-console.log(alp);
-alp.data = Data.printDataTest2;
-
-console.log(alp);

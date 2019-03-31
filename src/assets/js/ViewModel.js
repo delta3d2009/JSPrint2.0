@@ -14,8 +14,8 @@ export default {
         first_left: 10, //默认第一项的做边距
         interval_x: 10, //横向间距
         interval_y: 10, //纵向间距
-        ele_max_width: 160, //默认300像素
-        ele_min_width: 80, //默认200像素
+        ele_max_width: 180, //默认300像素
+        ele_min_width: 120, //默认200像素
     },
     /**
      * 
@@ -84,8 +84,8 @@ export default {
         printId: 0,
         isDel: "",
         name: 'xxx_lpp',
-        height: 320,
-        width: 420,
+        height: 420,
+        width: 350,
         dx: 0,
         dy: 0,
         fontSize: 12,

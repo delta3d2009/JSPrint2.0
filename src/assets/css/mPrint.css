@@ -149,6 +149,37 @@ img {
     height: 100%;
 }
 
+.mPrint-left-bot-ticket {
+    box-shadow: 0 .05rem 0.2rem 0 #868686;
+    position: absolute;
+    left: 305px;
+    top: 5px;
+}
+
+.mPrint-left-bot-ticket-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.mPrint-left-bot-ticket-drag {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: move;
+}
+
+.mPrint-left-bot-ticket-item {
+    height: 40px;
+    line-height: 40px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    border: .05rem solid #d8c7c7;
+    justify-content: space-between;
+    cursor: move;
+}
+
 .mPrint-left-bot-choice {
     width: 100%;
 }

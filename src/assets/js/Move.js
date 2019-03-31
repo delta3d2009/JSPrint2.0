@@ -1,0 +1,59 @@
+
+function getEle(id) {
+    return document.getElementById(id);
+}
+
+function mDrag(par) {
+    this.drag = getEle(par.id);
+    if (par.data) {
+        this.data = par.data;
+        mData.addData(this.data);
+    }
+    this.move();
+}
+
+mDrag.prototype.move = function () {
+    var _this = this;
+    _this.drag.onmousedown = function (e) {
+        var e = e || window.event;
+        var diffX = e.clientX - _this.drag.offsetLeft;
+        var diffY = e.clientY - _this.drag.offsetTop;
+        if (typeof _this.drag.setCapture != 'undefined') {
+            _this.drag.setCapture();
+        }
+        document.onmousemove = function (e) {
+            var e = e || window.event;
+            var left = e.clientX - diffX;
+            var top = e.clientY - diffY;
+            if (left < 305) {
+                left = 305;
+            } else if (left > _this.drag.parentNode.offsetWidth - _this.drag.offsetWidth) {
+                left = _this.drag.parentNode.offsetWidth - _this.drag.offsetWidth;
+            }
+            if (top < 5) {
+                top = 5;
+            } else if (top > _this.drag.parentNode.offsetHeight - _this.drag.offsetHeight) {
+                top = _this.drag.parentNode.offsetHeight - _this.drag.offsetHeight;
+            }
+            _this.drag.style.left = left + 'px';
+            _this.drag.style.top = top + 'px';
+        };
+        document.onmouseup = function (e) {
+            this.onmousemove = null;
+            this.onmouseup = null;
+            if (typeof _this.drag.releaseCapture != 'undefined') {
+                _this.drag.releaseCapture();
+            }
+            if (_this.data) {
+                var obj = {
+                    x: mData.delStr(_this.drag.style.left),
+                    y: mData.delStr(_this.drag.style.top),
+                    id: _this.drag.id
+                }
+                mData.updData(obj);
+            }
+        };
+    }
+}
+
+export default mDrag;

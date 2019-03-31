@@ -12,7 +12,7 @@ function Element(tagName, props, events, children) {
     this.key = props ? props.key : undefined;
 
     let count = 0;
-    
+
     this.children.forEach((child) => {
         if (child instanceof Element) {
             count += child.count;
