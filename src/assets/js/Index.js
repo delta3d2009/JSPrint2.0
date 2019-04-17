@@ -1,7 +1,7 @@
 import Element from "./Element";
 import Utils from "./Utils";
 import Data from "./Data";
-import ViewModel from "./ViewModel";
+import view from "./ViewModel";
 import Diff from "./Diff";
 import Patch from "./Patch";
 import Move from "./Move2";
@@ -21,7 +21,7 @@ import '../fonts/iconfont.woff2';
         typeof define === 'function' && define.amd ? define(factory) :
             (global = global || self, global.JSPrint = factory());
 }(this, function () {
-    function JSPrint(data) {
+    function JSPrint(data, view) {
         var _this = this;
         if (typeof (data.data.eles) === 'string') {
             data.data.eles = JSON.parse(data.data.eles);
@@ -29,25 +29,40 @@ import '../fonts/iconfont.woff2';
         if (typeof (data.data.bgi) === 'string') {
             data.data.bgi = JSON.parse(data.data.bgi);
         }
-        var tree = makeTree(data.printData);
+        _this.treeNode = makeTree(data.printData, view);
         Object.defineProperties(_this, {
-            'data': {
+            data: {
                 get: function () {
                     return data;
                 },
                 set: function (n) {
-                    const newTree = makeTree(n);
-                    const patches = Diff(tree, newTree);
+                    var __this = this;
+                    const newTree = makeTree(n, __this.view);
+                    const patches = Diff(__this.treeNode, newTree);
                     Patch(_this.root, patches);
-                    _this.root = newTree.render();
+                    __this.treeNode = newTree;
+                    _this.root = __this.treeNode.render();
                 }
             },
+            view: {
+                get: function () {
+                    return view;
+                },
+                set: function (n) {
+                    var __this = this;
+                    const newTree = makeTree(__this.data, n);
+                    const patches = Diff(__this.treeNode, newTree);
+                    Patch(_this.root, patches);
+                    __this.treeNode = newTree;
+                    _this.root = __this.treeNode.render();
+                }
+            }
         });
-        _this.root = tree.render();
+        _this.root = _this.treeNode.render();
         document.body.appendChild(_this.root);
     }
 
-    const makeTree = function (data) {
+    const makeTree = function (data, view) {
         // 来自数据库
         var tmp = [];
         for (let index = 0; index < data.length; index++) {
@@ -55,18 +70,29 @@ import '../fonts/iconfont.woff2';
             var subTmp = [];
             for (var key in item.data) {
                 var v = item.data[key];
-                subTmp.push(Element('div', { class: 'mPrint-left-bot-choice-item iconfont icon-fuxuankuang' }, { click: Copy }, [
-                    Element('span', { class: 'ci_file' }, {}, [v])
+                subTmp.push(Element('div', { class: 'mPrint-left-bot-choice-item' }, {}, [
+                    Element('span', { class: 'ci_file iconfont icon-yduifuxuankuang' }, { click: Utils.events.check }, [v])
                 ]));
             }
             tmp.push(Element('div', { class: 'mPrint-left-bot-choice' }, {}, [
                 Element('div', { class: 'mPrint-left-bot-choice-tit' }, {}, [
                     Element('div', {}, {}, [item.title]),
-                    Element('div', { class: 'dropicon iconfont icon-xiala' }, {}, [])
+                    Element('div', { class: 'dropicon iconfont icon-xiala' }, { click: Utils.events.expend }, [])
                 ]),
                 Element('div', { class: 'mPrint-left-bot-choice-cont ' + (index == 0 ? 'active' : '') }, {}, subTmp)
             ]));
             subTmp = [];
+        }
+        var mdlArr = [Element('div', { class: 'mPrint-left-bot-ticket-drag iconfont icon-tubiaozhizuomoban' }, { mousedown: Move }, [])];
+        if (view && view.mdl) {
+            view.mdl.forEach((item, index) => {
+                mdlArr.push([
+                    Element('div', { class: 'mPrint-left-bot-ticket-item', style: `min-width:${view.mData_global.ele_min_width}px;max-width:${view.mData_global.ele_max_width}px;` }, { mousedown: Move }, [
+                        Element('div', { class: 'mPrint-left-bot-ticket-item-text' }, {}, [item.name]),
+                        Element('div', { class: 'mPrint-left-bot-ticket-item-icon iconfont icon-shanchu' }, {}, [])
+                    ])
+                ]);
+            });
         }
         // 容器
         return Element('div', { class: 'mPrint' }, {}, [
@@ -82,14 +108,8 @@ import '../fonts/iconfont.woff2';
                 // 左下部分
                 Element('div', { class: 'mPrint-left-bot' }, {}, [
                     Element('div', { class: 'mPrint-left-bot-layer' }, {}, tmp),
-                    Element('div', { class: 'mPrint-left-bot-ticket', style: `height:${ViewModel.tmp.height}px;width:${ViewModel.tmp.width}px;overflow:hidden;` }, {}, [
-                        Element('div', { class: 'mPrint-left-bot-ticket-wrap' }, {}, [
-                            Element('div', { class: 'mPrint-left-bot-ticket-drag iconfont icon-tuozhuai' }, { mousedown: Move }, []),
-                            Element('div', { class: 'mPrint-left-bot-ticket-item', style: `min-width:${ViewModel.mData_global.ele_min_width}px;max-width:${ViewModel.mData_global.ele_max_width}px;` }, { mousedown: Move }, [
-                                Element('div', { class: 'mPrint-left-bot-ticket-item-text' }, {}, ['测试']),
-                                Element('div', { class: 'mPrint-left-bot-ticket-item-icon iconfont icon-shanchu-copy' }, {}, [])
-                            ])
-                        ]),
+                    Element('div', { class: 'mPrint-left-bot-ticket', style: `height:${view.tmp.height}px;width:${view.tmp.width}px;overflow:hidden;` }, {}, [
+                        Element('div', { class: 'mPrint-left-bot-ticket-wrap' }, {}, mdlArr),
                     ])
                 ]),
             ]),
@@ -99,5 +119,11 @@ import '../fonts/iconfont.woff2';
     }
     return JSPrint;
 }));
-var alp = new JSPrint(Data);
-alp.data = Data.printDataTest2;
+var alp = new JSPrint(Data, view);
+setTimeout(() => {
+    alp.data = Data.printDataTest;
+}, 2000);
+
+setTimeout(() => {
+    alp.data = Data.printDataTest2;
+}, 4000);

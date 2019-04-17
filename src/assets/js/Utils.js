@@ -63,6 +63,26 @@ const Utils = {
                 node.setAttribute(key, value);
                 break;
         }
+    },
+    events: {
+        expend: function (e) {
+            var _this = e.target.parentNode.nextSibling;
+            if (_this.classList.contains('active')) {
+                _this.classList.remove('active');
+            } else {
+                _this.classList.add('active');
+            }
+        },
+        check: function (e) {
+            var _this = e.target;
+            if (_this.classList.contains('icon-yduifuxuankuang')) {
+                _this.classList.remove('icon-yduifuxuankuang');
+                _this.classList.add('icon-yduifuxuankuangxuanzhong');
+            } else {
+                _this.classList.add('icon-yduifuxuankuang');
+                _this.classList.remove('icon-yduifuxuankuangxuanzhong');
+            }
+        }
     }
 }
 

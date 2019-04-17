@@ -9,7 +9,16 @@
 </head>
 
 <body>
-
+    <button onclick="copy()">复制</button>
+    <script>
+        function copy() {
+            if (clipboardData.setData("text", 'djskfhsakjfh')) {
+                alert("复制成功!")
+            } else {
+                alert("复制失败!")
+            }
+        }
+    </script>
 </body>
 
 </html>

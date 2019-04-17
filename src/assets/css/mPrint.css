@@ -147,6 +147,7 @@ img {
     box-shadow: 0 .05rem 0.2rem 0 #868686;
     width: 300px;
     height: 100%;
+    overflow: scroll;
 }
 
 .mPrint-left-bot-ticket {
@@ -178,6 +179,7 @@ img {
     border: .05rem solid #d8c7c7;
     justify-content: space-between;
     cursor: move;
+    padding: 0 10px;
 }
 
 .mPrint-left-bot-choice {
@@ -225,6 +227,8 @@ img {
 .ci_file {
     padding-left: 5px;
     font-size: .6rem;
+    display: inline-block;
+    width: 100%;
 }
 
 .mPrint-right {

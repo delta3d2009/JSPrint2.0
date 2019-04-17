@@ -179,7 +179,61 @@
             </fieldset>
         </div>
     </div> -->
+    <div style="width:100px;height:50px;border:1px;" onclick="copy()">复制</div>
+    <div id="p"></div>
+    <div class="source" contenteditable="true">Try copying text from this box...</div>
+    <div class="target" contenteditable="true">...and pasting it into this one</div>
 </body>
-<script src="/assets/js/init.js"></script>
+<!-- <script src="/assets/js/init.js"></script> -->
+<script>
+
+
+    document.onkeyup = function (event) {
+        // 复制
+        if (event.ctrlKey == 1) {
+            if (event.key === 'c') {
+                console.log(arrDom);
+                console.log('复制成功！');
+            }
+        }
+        // 粘贴
+        if (event.ctrlKey == 1) {
+            if (event.key === 'v') {
+                console.log('ctr+v');
+                arrDom.forEach((item, index) => {
+                    pasteBox.appendChild(item.cloneNode(true));
+                });
+            }
+        }
+    }
+
+    const source = document.querySelector('div.source');
+    function copy() {
+        var myEvent = new Event('copy');
+        document.body.dispatchEvent(myEvent);
+    }
+
+    document.body.addEventListener('copy', function (e) {
+        var cpTxt = "复制的数据2222";
+        console.log(e.clipboardData);
+        e.clipboardData.setData('Text', cpTxt);
+        e.preventDefault();
+    })
+
+
+
+    // source.addEventListener('copy', (event) => {
+    //     const selection = document.getSelection();
+    //     event.clipboardData.setData('text/plain', selection.toString().toUpperCase());
+    //     event.preventDefault();
+    // });
+
+    document.body.addEventListener('paste', function (event) {//paste事件   
+        let paste = (event.clipboardData || window.clipboardData).getData('text');
+        paste = paste.toUpperCase();
+        document.getElementById('p').innerText = paste;
+        event.preventDefault();
+    });
+</script>
 
 </html>

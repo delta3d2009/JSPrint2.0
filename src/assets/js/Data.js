@@ -80,16 +80,6 @@ export default {
         }
     }],
     printDataTest2: [{
-        id: 1,
-        title: '打印选项4',
-        data: {
-            filed1: '打印项目1',
-            filed2: '打印项目2',
-            filed3: '打印项目3',
-            filed4: '打印项目4',
-        },
-
-    }, {
         id: 2,
         title: '打印选项5',
         data: {
